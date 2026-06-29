@@ -1,5 +1,5 @@
-import fs from 'node:fs/promises';
-import { pathToFileURL } from 'node:url';
+import fs from 'fs/promises';
+import { pathToFileURL } from 'url';
 
 export const START_MARKER = '<!-- profiler-preview-links:start -->';
 export const END_MARKER = '<!-- profiler-preview-links:end -->';
