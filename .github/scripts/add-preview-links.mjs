@@ -134,7 +134,7 @@ async function getIssueTexts({ owner, repo, issueNumber, token }) {
     token
   );
 
-  return [issue.body ?? '', ...comments.map(comment => comment.body ?? '')];
+  return [issue.body ?? '', ...comments.map((comment) => comment.body ?? '')];
 }
 
 async function findProfilePath({ owner, repo, pullRequest, token }) {
@@ -199,18 +199,30 @@ export async function main() {
     return;
   }
 
-  const profilePath = await findProfilePath({ owner, repo, pullRequest, token });
+  const profilePath = await findProfilePath({
+    owner,
+    repo,
+    pullRequest,
+    token,
+  });
   const previewLinks = buildPreviewLinks(pullRequest.number, profilePath);
   const updatedBody = addPreviewLinksToBody(body, previewLinks);
 
-  await githubRequest(`/repos/${owner}/${repo}/pulls/${pullRequest.number}`, token, {
-    body: JSON.stringify({ body: updatedBody }),
-    method: 'PATCH',
-  });
+  await githubRequest(
+    `/repos/${owner}/${repo}/pulls/${pullRequest.number}`,
+    token,
+    {
+      body: JSON.stringify({ body: updatedBody }),
+      method: 'PATCH',
+    }
+  );
 
   console.log(`Added preview links to pull request #${pullRequest.number}.`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
   await main();
 }
