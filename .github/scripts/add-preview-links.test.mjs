@@ -22,7 +22,10 @@ test('hasDeployPreviewLink detects generated and manual preview links', () => {
     ),
     true
   );
-  assert.equal(hasDeployPreviewLink(`${START_MARKER}\nlinks\n${END_MARKER}`), true);
+  assert.equal(
+    hasDeployPreviewLink(`${START_MARKER}\nlinks\n${END_MARKER}`),
+    true
+  );
 });
 
 test('extractIssueNumbers finds markdown references and issue URLs', () => {
@@ -35,9 +38,10 @@ test('extractIssueNumbers finds markdown references and issue URLs', () => {
 });
 
 test('extractProfileUrls finds profiler and share URLs', () => {
-  assert.deepEqual(extractProfileUrls('Profile: https://share.firefox.dev/466MJwC.'), [
-    'https://share.firefox.dev/466MJwC',
-  ]);
+  assert.deepEqual(
+    extractProfileUrls('Profile: https://share.firefox.dev/466MJwC.'),
+    ['https://share.firefox.dev/466MJwC']
+  );
   assert.deepEqual(
     extractProfileUrls(
       '[Profile](https://profiler.firefox.com/public/abc/calltree/?thread=1&v=16)'
@@ -62,7 +66,10 @@ test('resolveProfileUrlToPath follows share.firefox.dev redirects', async () => 
   });
 
   assert.equal(
-    await resolveProfileUrlToPath('https://share.firefox.dev/466MJwC', fetchImpl),
+    await resolveProfileUrlToPath(
+      'https://share.firefox.dev/466MJwC',
+      fetchImpl
+    ),
     '/public/abc/marker-table/?thread=0&v=16'
   );
 });
@@ -77,7 +84,10 @@ test('buildPreviewLinks uses the main branch and deploy preview hosts', () => {
 
 test('addPreviewLinksToBody prepends a marked block', () => {
   assert.equal(
-    addPreviewLinksToBody('Fixes #5598.', '[Main](main) | [Deploy preview](preview)'),
+    addPreviewLinksToBody(
+      'Fixes #5598.',
+      '[Main](main) | [Deploy preview](preview)'
+    ),
     `${START_MARKER}\n[Main](main) | [Deploy preview](preview)\n${END_MARKER}\n\nFixes #5598.`
   );
 });
